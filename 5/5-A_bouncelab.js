@@ -6,8 +6,29 @@ let x = 100;          // 丸の中心の位置
 let y = 80;
 let vx = 180;         // 横の速さ（1秒に180px）
 let vy = 140;         // 縦の速さ（1秒に140px。＋ は下へ）
-const r = 14;         // 半径
+let r = 14;         // 半径
 let last = performance.now();
+
+document.addEventListener("keydown", (e) => {
+  if (e.code === "ArrowUp") {
+    vx = vx * 1.2;   // 速さを1.2倍（向きはそのまま）
+    vy = vy * 1.2;
+  }
+  // ここに、ほかのキーを足す
+  if (e.code === "ArrowUp") {
+    vx = vx * 1.2;
+    vy = vy * 1.2;
+  }else if (e.code === "ArrowDown") {
+    vx = vx * 0.8;
+    vy = vy * 0.8;
+  }else if (e.code === "ArrowRight") {
+    // 右キー：半径を大きくする（最大30）
+    r = Math.min(r + 3, 30);
+  } else if (e.code === "ArrowLeft") {
+    // 左キー：半径を小さくする（最小5）
+    r = Math.max(r - 3, 5);
+  }
+});
 
 function update(dt) {
   x = x + vx * dt;
