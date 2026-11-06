@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>足し算計算機</title>
+</head>
+<body>
+    <button onclick="add()">足し算する</button>
+    <script>
+      function add() {
+        const a = prompt("1つ目の数を入力してください");
+        const b = prompt("2つ目の数を入力してください");
+        const answer = a + b;
+        console.log(`${a} + ${b} = ${answer}`);
+        alert(`答えは ${answer} です`);
+      }
+    </script>
+</body>
+</html>

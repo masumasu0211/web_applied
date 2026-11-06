@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>星を並べる</title>
+  </head>
+  <body>
+    <h2>★を並べる</h2>
+    <input type="number" id="starCount" />
+    <button onclick="printStars()">表示</button>
+    <p id="stars"></p>
+
+    <script>
+      function printStars() {
+        const count = Number(document.getElementById("starCount").value);
+        if (count <= 0) {
+            document.getElementById("stars").innerText = "1以上の数を入れてください";
+            return;
+        }
+
+        let result = "";
+        for (let i = 1; i <= count; i++) {
+          result += "★";
+        }
+
+        document.getElementById("stars").innerText = result;
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>おみくじ</title>
+    <style>
+      .box {
+        width: 200px;
+        padding: 20px;
+        font-size: 24px;
+        text-align: center;
+        border: 2px solid #333;
+      }
+      .daikichi { background-color: lightpink; }
+      .chukichi { background-color: lightblue; }
+      .shokichi { background-color: lightgreen; }
+      .kichi    { background-color: khaki; }
+      .kyo      { background-color: lightgray; }
+    </style>
+  </head>
+  <body>
+    <h2>今日の運勢は？</h2>
+    <button onclick="drawOmikuji()">おみくじを引く</button>
+    <div id="result" class="box">？</div>
+
+    <script>
+      function drawOmikuji() {
+        const n = Math.floor(Math.random() * 5);   // 0〜4 のどれか
+        const resultBox = document.getElementById("result");
+
+        let text = "";
+        let color = "";
+        switch (n) {
+          case 0:
+            text = "大吉";
+            color = "daikichi";
+            break;
+          case 1:
+            text = "中吉";
+            color = "chukichi";
+            break;
+          case 2:
+            text = "小吉";
+            color = "shokichi";
+            break;
+          case 3:
+            text = "吉";
+            color = "kichi";
+            break;
+          case 4:
+            text = "凶";
+            color = "kyo";
+            break;
+        }
+
+        resultBox.innerText = text;
+       resultBox.className = "box " + color;
+      }
+    </script>
+  </body>
+</html>

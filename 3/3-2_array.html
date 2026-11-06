@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+ <body>
+    <p>コンソールを見てください</p>
+
+    <script>
+      const scores = [120, 80, 95];
+
+        console.log(scores);          // 配列ぜんぶ
+        console.log(scores[0]);       // 0番目
+        console.log(scores[2]);       // 2番目
+        console.log(scores.length);   // いくつ入っているか
+        scores.push(60);              // 最後に1つ追加する
+        console.log(scores);
+        console.log(scores.length);
+        // 書き方1：C言語と同じ for（番号を使う）
+        for (let i = 0; i < scores.length; i++) {
+            console.log(`${i}番目：${scores[i]}`);
+        }
+
+        // 書き方2：for...of（中身を1つずつ取り出す）
+        for (const score of scores) {
+            console.log(score);
+        }
+        console.log(scores[4]);
+    </script>
+  </body>
+</html>
