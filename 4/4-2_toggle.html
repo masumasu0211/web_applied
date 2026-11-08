@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>クラスの切り替え</title>
+    <style>
+      .highlight {
+        color: green;
+        background-color: #e0ffe0;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="toggleBtn">スタイル切り替え</button>
+    <p id="text">この文字にクラスが付いたり外れたりします</p>
+
+    <script>
+      const btn = document.getElementById("toggleBtn");
+      const text = document.getElementById("text");
+
+      btn.addEventListener("click", function () {
+        text.classList.toggle("highlight");   // 付いていれば外す・なければ付ける
+      });
+    </script>
+  </body>
+</html>

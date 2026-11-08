@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ライトスイッチ</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        text-align: center;
+        padding-top: 50px;
+        transition: background-color 0.5s;
+      }
+      .dark {
+        background-color: #222;
+        color: white;
+      }
+      #bulb {
+        width: 100px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>ライトスイッチ</h2>
+    <img id="bulb" src="https://www.w3schools.com/js/pic_bulboff.gif" alt="ライト" />
+    <p id="status">現在：OFF</p>
+
+    <script>
+      let isOn = false;   // 状態
+
+      const bulb = document.getElementById("bulb");
+      const status = document.getElementById("status");
+
+      // ① 状態から表示を決める関数
+      function draw() {
+        if (isOn) {
+          bulb.src = "https://www.w3schools.com/js/pic_bulbon.gif";
+          status.innerText = "現在：ON";
+          document.body.classList.add("dark");
+        } else {
+          bulb.src = "https://www.w3schools.com/js/pic_bulboff.gif";
+          status.innerText = "現在：OFF";
+          document.body.classList.remove("dark");
+        }
+      }
+
+      // ② イベントでは、状態を変えて、表示し直すだけ
+      bulb.addEventListener("click", function () {
+        isOn = !isOn;   // true と false を入れ替える
+        draw();
+      });
+       isOn = true;
+      draw();   // 最初の表示
+    </script>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+      <h2>① イベントハンドラ方式</h2>
+    <button onclick="sayHello()">挨拶する（ハンドラ）</button>
+    <p id="message1"></p>
+
+    <h2>② イベントリスナ方式</h2>
+    <button id="listenerBtn">挨拶する（リスナ）</button>
+    <p id="message2"></p>
+    <button id="countBtn">数える</button>
+    <p id="count">0</p>
+
+    <script>
+      // ① イベントハンドラで呼ばれる関数
+      function sayHello() {
+        document.getElementById("message1").innerText = "こんにちは！（ハンドラ）";
+      }
+
+      // ② イベントリスナで、クリックしたときの処理を登録する
+      document.getElementById("listenerBtn").addEventListener("click", function () {
+        document.getElementById("message2").innerText = "こんにちは！（リスナ）";
+      });
+       let count = 0;
+
+      function countUp() {
+        count = count + 1;
+        document.getElementById("count").innerText = count;
+      }
+
+      // 関数の名前だけを渡す（括弧は付けない）
+      document.getElementById("countBtn").addEventListener("click", countUp);
+    </script>
+</body>
+</html>

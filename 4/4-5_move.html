@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>キーボードで動かす</title>
+    <style>
+      .stage {
+        position: relative;
+        width: 600px;
+        height: 240px;
+        margin: 24px auto;
+        border: 2px solid #333;
+        background: #f6f8ff;
+        overflow: hidden;
+      }
+      #box {
+        position: absolute;
+        width: 48px;
+        height: 48px;
+        background: #ff6b6b;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <p style="text-align: center">← / → で赤い四角が動きます</p>
+    <div class="stage" id="stage">
+      <div id="box"></div>
+    </div>
+
+    <script>
+      const box = document.getElementById("box");
+
+      let x = 50;          // 横の位置（状態）
+      const y = 96;        // 縦の位置（今回は動かさない）
+      const step = 10;     // 1回に動く量
+
+      // 状態（x, y）から表示を決める
+      function draw() {
+        box.style.left = x + "px";
+        box.style.top = y + "px";
+      }
+      draw();
+
+      // キーを押したら、状態を変えて、表示し直す
+      document.addEventListener("keydown", (e) => {
+        if (e.code === "ArrowRight") {
+          x = x + step;
+        } else if (e.code === "ArrowLeft") {
+          x = x - step;
+        }
+        draw();
+      });
+    </script>
+  </body>
+</html>

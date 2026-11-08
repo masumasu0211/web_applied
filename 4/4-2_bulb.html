@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>電球スイッチ</h2>
+    <button id="switchBtn">電球ON</button><br /><br />
+    <img id="bulb" src="https://www.w3schools.com/js/pic_bulboff.gif" alt="電球" width="100" />
+
+    <script>
+      const button = document.getElementById("switchBtn");
+      const bulb = document.getElementById("bulb");
+
+      button.addEventListener("click", function () {
+        bulb.src = "https://www.w3schools.com/js/pic_bulbon.gif";   // 画像のファイルを差し替える
+      });
+    </script>
+</body>
+</html>
