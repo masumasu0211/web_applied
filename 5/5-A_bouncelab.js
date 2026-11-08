@@ -8,6 +8,7 @@ let vx = 180;         // 横の速さ（1秒に180px）
 let vy = 140;         // 縦の速さ（1秒に140px。＋ は下へ）
 let r = 14;         // 半径
 let last = performance.now();
+let hitCount = 0;//壁に当たった回数をカウント
 
 document.addEventListener("keydown", (e) => {
   if (e.code === "ArrowUp") {
@@ -38,28 +39,36 @@ function update(dt) {
   if (x + r > canvas.width) {
     x = canvas.width - r;
     vx = -vx;
+     hitCount++; // 追加
   }
   if (x - r < 0) {
     x = r;
     vx = -vx;
+     hitCount++; // 追加
   }
   // 上下の壁
   if (y + r > canvas.height) {
     y = canvas.height - r;
     vy = -vy;
+    hitCount++; // 追加
   }
   if (y - r < 0) {
     y = r;
     vy = -vy;
+    hitCount++; // 追加
   }
 }
 
 function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "#ffd166";
-  ctx.beginPath();
-  ctx.arc(x, y, r, 0, Math.PI * 2);
-  ctx.fill();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#ffd166";
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+    // 壁に当たった回数を表示
+    ctx.fillStyle = "white";
+    ctx.font = "18px Arial";
+    ctx.fillText("壁に当たった回数：" + hitCount, 10, 25);
 }
 // now：今回呼ばれた時刻（ミリ秒）。requestAnimationFrame が引数で渡してくれる
 function loop(now) {
