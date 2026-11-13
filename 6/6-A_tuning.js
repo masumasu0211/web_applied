@@ -9,6 +9,13 @@ const CONFIG = {
   MAX_JUMPS: 2,
   FALL_GRAVITY_RATE: 2,
 };
+/*const CONFIG = {
+  GRAVITY: 196,          // 9.8 m/秒² × 20
+  JUMP_SPEED: 60,        // 3 m/秒 × 20
+  MOVE_SPEED: 100,       // 5 m/秒 × 20
+  MAX_JUMPS: 1,          // 現実では空中で跳べない
+  FALL_GRAVITY_RATE: 1,  // 現実では落ちるときも重力は同じ
+};*/
 
 const TARGET_HEIGHT = 64;   // 目印の線の高さ（床から64px＝キャラ2つ分）。ぶつからない
 
