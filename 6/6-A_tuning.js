@@ -5,7 +5,8 @@ const ctx = canvas.getContext("2d");
 const CONFIG = {
   GRAVITY: 2000,
   JUMP_SPEED: 700,
-  MOVE_SPEED: 240,
+  MOVE_SPEED: 360,
+  AIR_MOVE_SPEED: 360,
   MAX_JUMPS: 2,
   FALL_GRAVITY_RATE: 2,
 };
@@ -47,11 +48,14 @@ function collideWithFloor() {
 }
 
 function update(dt) {
+    // 地面にいるときは MOVE_SPEED、空中にいるときは AIR_MOVE_SPEED
+  const speed = player.isGrounded ? CONFIG.MOVE_SPEED : CONFIG.AIR_MOVE_SPEED;
+
   if (keys["ArrowRight"]) {
-    player.x = player.x + CONFIG.MOVE_SPEED * dt;
+    player.x = player.x + speed * dt;
   }
   if (keys["ArrowLeft"]) {
-    player.x = player.x - CONFIG.MOVE_SPEED * dt;
+    player.x = player.x - speed * dt;
   }
   // 落ちているとき（vy が＋）だけ、重力を強くする
   const g = player.vy > 0 ? CONFIG.GRAVITY * CONFIG.FALL_GRAVITY_RATE : CONFIG.GRAVITY;
