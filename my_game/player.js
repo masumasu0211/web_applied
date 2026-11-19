@@ -6,7 +6,14 @@ const MOVE_SPEED = 240;
 const MAX_JUMPS = 2;          // 地面を離れてから跳べる回数（2段ジャンプ）
 const FALL_GRAVITY_RATE = 2;  // 落ちるときは、重力を何倍にするか
 
-const player = { x: 80, y: 20, w: 32, h: 32, vx: 0, vy: 0, isGrounded: false, jumpsLeft: MAX_JUMPS, state: "idle" };
+const player = { x: 80, y: 20, w: 32, h: 32, vx: 0, vy: 0, isGrounded: false, jumpsLeft: MAX_JUMPS, state: "idle", frameIndex: 0, frameTimer: 0 };
+
+// コマを並べた画像（1コマ 32×32）
+const playerImg = new Image();
+playerImg.src = "7-3_bird.png";
+const FRAME_SIZE = 32;    // 1コマの大きさ
+const FRAME_TIME = 0.12;  // 1コマを見せる時間（秒）
+
 // 状態ごとの色
 const STATE_COLORS = { idle: "#7ef5e1", run: "#6dd3ff", jump: "#ffd166", fall: "#ff9999" };
 
@@ -64,14 +71,22 @@ function updatePlayer(dt) {
   player.y = player.y + player.vy * dt;
   collideWithFloor();
   player.state = decideState();   // 動かし終わったら、今の状態を決める
+  // コマ送り（タイマーの形）：時間をためて、決めた時間を超えたら次のコマへ進め、タイマーを戻す
+  player.frameTimer = player.frameTimer + dt;
+  if (player.frameTimer >= FRAME_TIME) {
+    player.frameIndex = (player.frameIndex + 1) % 4;   // 0 → 1 → 2 → 3 → 0 …
+    player.frameTimer = 0;
+  }  
 }
 
 // プレイヤーを描く（★ main.js の draw から呼ばれる）
 function drawPlayer() {
-ctx.fillStyle = STATE_COLORS[player.state];   // 状態を見て、色を選ぶ
-  ctx.fillRect(player.x, player.y, player.w, player.h);
+  // 画像から1コマを切り出して描く（今は「走る」の段だけ）
+  const sx = player.frameIndex * FRAME_SIZE;   // 切り出す左上の x：何コマ目か
+  const sy = 1 * FRAME_SIZE;                   // 切り出す左上の y：2段目（走る）
+  ctx.drawImage(playerImg, sx, sy, FRAME_SIZE, FRAME_SIZE, player.x, player.y, player.w, player.h);
 
   ctx.fillStyle = "#e8eeff";
   ctx.font = "14px monospace";
- ctx.fillText("vy = " + player.vy.toFixed(0) + "   jumpsLeft = " + player.jumpsLeft + "   state = " + player.state, 10, 20);
+  ctx.fillText("vy = " + player.vy.toFixed(0) + "   jumpsLeft = " + player.jumpsLeft + "   state = " + player.state + "   frameIndex = " + player.frameIndex, 10, 20);
 }
