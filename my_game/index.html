@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <title>my game</title>
+    <style>
+      body {
+        background-color: #0b1020;
+        color: #e8eeff;
+        font-family: sans-serif;
+      }
+      canvas {
+        background-color: #111a33;
+        border: 1px solid #8899cc;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>my game</h1>
+    <canvas id="stage" width="640" height="360"></canvas>
+    <p id="info"></p>
+
+    <!-- 読み込む順番：使われる側が先、全体の流れ（main.js）が最後 -->
+    <script src="stage.js"></script>
+    <script src="player.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
