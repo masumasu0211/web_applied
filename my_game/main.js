@@ -3,12 +3,14 @@
 // 役割ごとの「動かす」関数を呼ぶ
 function update(dt) {
   updatePlayer(dt);
+  updateEnemies(dt);
 }
 
 // 役割ごとの「描く」関数を呼ぶ
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawStage();
+  drawEnemies();
   drawPlayer();
 }
 
