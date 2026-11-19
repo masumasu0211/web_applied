@@ -13,18 +13,29 @@ enemies.push(createEnemy(540, 60));
 
 // ③ 動かす：配列の敵を1体ずつ取り出して、同じ処理をする
 function updateEnemies(dt) {
-  for (const enemy of enemies) {
-    enemy.x = enemy.x + enemy.vx * dt;
-    // 端を越えたら、位置を戻して、向きを反対に（５-４の跳ね返り）
-    if (enemy.x < 0) {
-      enemy.x = 0;
-      enemy.vx = -enemy.vx;
+    for (const enemy of enemies) {
+        enemy.x = enemy.x + enemy.vx * dt;
+        // 端を越えたら、位置を戻して、向きを反対に（５-４の跳ね返り）
+        if (enemy.x < 0) {
+            enemy.x = 0;
+            enemy.vx = -enemy.vx;
+            }
+            if (enemy.x + enemy.w > canvas.width) {
+            enemy.x = canvas.width - enemy.w;
+            enemy.vx = -enemy.vx;
+        }
     }
-    if (enemy.x + enemy.w > canvas.width) {
-      enemy.x = canvas.width - enemy.w;
-      enemy.vx = -enemy.vx;
+}
+
+// プレイヤーとぶつかったとき：上から落ちてきたときだけ、敵を倒す
+function collideWithEnemies(prevBottom) {
+    for (const enemy of enemies) {
+        if (aabb(player, enemy) && prevBottom <= enemy.y && player.vy > 0) {
+            enemy.alive = false;            // 倒した（状態を書き換える）
+            player.vy = -JUMP_SPEED / 2;    // 踏んだら、少し跳ねる
+        }
     }
-  }
+    enemies = enemies.filter((enemy) => enemy.alive);   // 生きている敵だけを残す
 }
 
 // ④ 描く：配列の敵を1体ずつ取り出して描く
@@ -33,4 +44,7 @@ function drawEnemies() {
   for (const enemy of enemies) {
     ctx.fillRect(enemy.x, enemy.y, enemy.w, enemy.h);
   }
+
+    ctx.fillStyle = "#e8eeff";
+    ctx.fillText("敵 = " + enemies.length, 10, 40);
 }

@@ -2,8 +2,10 @@
 
 // 役割ごとの「動かす」関数を呼ぶ
 function update(dt) {
+   const prevBottom = player.y + player.h;   // 動かす前（前の回）の、プレイヤーの下の辺
   updatePlayer(dt);
   updateEnemies(dt);
+  collideWithEnemies(prevBottom);
 }
 
 // 役割ごとの「描く」関数を呼ぶ
