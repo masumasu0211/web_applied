@@ -10,6 +10,17 @@ const HIT_TIME = 1;
 
 const player = { x: 80, y: 20, w: 32, h: 32, vx: 0, vy: 0, isGrounded: false, jumpsLeft: MAX_JUMPS, state: "idle", frameIndex: 0, frameTimer: 0, facing: 1,hp: MAX_HP, hitTimer: 0 };
 
+// 最初の値に戻す（★ main.js の resetGame から呼ばれる）
+function resetPlayer() {
+  player.x = 80;
+  player.y = 20;
+  player.vx = 0;
+  player.vy = 0;
+  player.jumpsLeft = MAX_JUMPS;
+  player.hp = MAX_HP;
+  player.hitTimer = 0;
+}
+
 // コマを並べた画像（1コマ 32×32）
 const playerImg = new Image();
 playerImg.src = "7-3_bird.png";

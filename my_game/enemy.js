@@ -7,10 +7,15 @@ function createEnemy(x, vx, hp) {
 
 // ② 入れる：敵をまとめて入れる配列（７-６で入れ直すので let）
 let enemies = [];
-enemies.push(createEnemy(200, 80, 1));
-enemies.push(createEnemy(380, -120, 1));
-enemies.push(createEnemy(540, 60, 1));
-enemies.push(createEnemy(100, 70, 2));
+
+// 最初の敵を入れ直す（★ main.js の resetGame から呼ばれる）
+function resetEnemies() {
+  enemies = [];
+  enemies.push(createEnemy(200, 80, 1));
+  enemies.push(createEnemy(380, -120, 1));
+  enemies.push(createEnemy(540, 60, 1));
+  enemies.push(createEnemy(100, 70, 2));
+}
 
 // ③ 動かす：配列の敵を1体ずつ取り出して、同じ処理をする
 function updateEnemies(dt) {
