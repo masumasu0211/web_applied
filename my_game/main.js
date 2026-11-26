@@ -30,12 +30,20 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
+// タイトルとゲームオーバーでは、クリックでも始められる
+canvas.addEventListener("pointerdown", () => {
+  if (gameState === "title" || gameState === "gameover") {
+    startGame();
+  }
+});
+
 function update(dt) {
   if (gameState !== "play") {
     return;                 // プレイ中でなければ、動かさない
   }
   const prevBottom = player.y + player.h;
   updatePlayer(dt);
+  spawnEnemies(dt);
   updateEnemies(dt);
   collideWithEnemies(prevBottom);
   if (player.hp <= 0) {
@@ -69,7 +77,8 @@ function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawStage();
   if (gameState === "title") {
-    drawMessage("my game", "Enter で始める");
+    drawMessage("my game", "Enterかクリックで始める");
+    drawAim();
     return;                 // タイトルでは、敵とプレイヤーは描かない
   }
 
@@ -81,8 +90,9 @@ function draw() {
     drawMessage("PAUSE", "P でつづける");
   }
   if (gameState === "gameover") {
-    drawMessage("GAME OVER", "Enter でもう一度");
+    drawMessage("GAME OVER", "Enterかクリックでもう一度");
   }
+  drawAim();
 }
 
 let last = performance.now();
