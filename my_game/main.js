@@ -1,19 +1,55 @@
-// 全体の流れ：毎回「動かす → 描く」をくり返す
+// 全体の流れ：ゲームの状態を見て、動かす・描く
 
-// 役割ごとの「動かす」関数を呼ぶ
+let gameState = "title";   // ゲーム全体の状態："title"・"play"・"pause"（このあと "gameover" も足す）
+
+// ゲーム全体のキーボードイベント処理
+document.addEventListener("keydown", (e) => {
+  if (e.code === "Enter" && gameState === "title") {
+    gameState = "play";
+  }
+  if (e.code === "KeyP") {
+    if (gameState === "play") {
+      gameState = "pause";
+    } else if (gameState === "pause") {
+      gameState = "play";
+    }
+  }
+});
+
 function update(dt) {
-   const prevBottom = player.y + player.h;   // 動かす前（前の回）の、プレイヤーの下の辺
+  if (gameState !== "play") {
+    return;                 // プレイ中でなければ、動かさない
+  }
+  const prevBottom = player.y + player.h;
   updatePlayer(dt);
   updateEnemies(dt);
   collideWithEnemies(prevBottom);
 }
 
-// 役割ごとの「描く」関数を呼ぶ
+// 画面のまん中に文字を書く
+function drawMessage(text, sub) {
+  ctx.fillStyle = "#e8eeff";
+  ctx.textAlign = "center";
+  ctx.font = "32px sans-serif";
+  ctx.fillText(text, canvas.width / 2, 150);
+  ctx.font = "16px sans-serif";
+  ctx.fillText(sub, canvas.width / 2, 190);
+  ctx.textAlign = "left";   // ほかの文字のために戻す
+  ctx.font = "14px monospace";
+}
+
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawStage();
+  if (gameState === "title") {
+    drawMessage("my game", "Enter で始める");
+    return;                 // タイトルでは、敵とプレイヤーは描かない
+  }
   drawEnemies();
   drawPlayer();
+  if (gameState === "pause") {
+    drawMessage("PAUSE", "P でつづける");
+  }
 }
 
 let last = performance.now();
