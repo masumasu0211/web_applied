@@ -47,7 +47,8 @@ function collideWithEnemies(prevBottom) {
     if (aabb(player, enemy) && prevBottom <= enemy.y && player.vy > 0) {
         stompEnemy(enemy);
         player.vy = -JUMP_SPEED / 2;    // 踏んだら、少し跳ねる
-    }else if (aabb(player, enemy) && player.hitTimer <= 0) {
+        score = score + 1;              // 点数を足す（★ main.js の score を書き換える）
+      }else if (aabb(player, enemy) && player.hitTimer <= 0) {
       player.hp = player.hp - 1;      // 横から当たった：HP を減らす（★ player.js の値を書き換える）
       player.hitTimer = HIT_TIME;     // しばらく当たらない
     }

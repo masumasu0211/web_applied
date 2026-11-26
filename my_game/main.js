@@ -1,11 +1,13 @@
 // 全体の流れ：ゲームの状態を見て、動かす・描く
 
 let gameState = "title";   // ゲーム全体の状態："title"・"play"・"pause"（このあと "gameover" も足す）
+let score = 0;             // 点数
 
 // ゲームを最初の値に戻す（後から足す値も、ここに足す）
 function resetGame() {
   resetPlayer();
   resetEnemies();
+  score = 0;
 }
  
 // 始める：最初の値に戻してから、プレイ中にする
@@ -53,6 +55,16 @@ function drawMessage(text, sub) {
   ctx.font = "14px monospace";
 }
 
+// 点数と HP（HUD）
+function drawHud() {
+  ctx.fillStyle = "#e8eeff";
+  ctx.fillText("SCORE " + score, 500, 20);
+  ctx.strokeStyle = "#e8eeff";
+  ctx.strokeRect(500, 30, 120, 12);                       // HP バーの枠
+  ctx.fillStyle = "#7ef5e1";
+  ctx.fillRect(500, 30, 120 * player.hp / MAX_HP, 12);   // HP の分だけ塗る
+}
+
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawStage();
@@ -60,8 +72,11 @@ function draw() {
     drawMessage("my game", "Enter で始める");
     return;                 // タイトルでは、敵とプレイヤーは描かない
   }
+
   drawEnemies();
   drawPlayer();
+  drawHud();
+
   if (gameState === "pause") {
     drawMessage("PAUSE", "P でつづける");
   }
