@@ -5,8 +5,10 @@ const JUMP_SPEED = 700;
 const MOVE_SPEED = 240;
 const MAX_JUMPS = 2;          // 地面を離れてから跳べる回数（2段ジャンプ）
 const FALL_GRAVITY_RATE = 2;  // 落ちるときは、重力を何倍にするか
+const MAX_HP = 3;
+const HIT_TIME = 1;
 
-const player = { x: 80, y: 20, w: 32, h: 32, vx: 0, vy: 0, isGrounded: false, jumpsLeft: MAX_JUMPS, state: "idle", frameIndex: 0, frameTimer: 0, facing: 1 };
+const player = { x: 80, y: 20, w: 32, h: 32, vx: 0, vy: 0, isGrounded: false, jumpsLeft: MAX_JUMPS, state: "idle", frameIndex: 0, frameTimer: 0, facing: 1,hp: MAX_HP, hitTimer: 0 };
 
 // コマを並べた画像（1コマ 32×32）
 const playerImg = new Image();
@@ -101,21 +103,28 @@ function updatePlayer(dt) {
     player.frameIndex = (player.frameIndex + 1) % ANIMS[player.state].count;
     player.frameTimer = 0;
   } 
+  // 当たらない時間（タイマーの形・続ける）：残っている間は、dt だけ減らす
+  if (player.hitTimer > 0) {
+    player.hitTimer = player.hitTimer - dt;
+  }
 }
 
-// プレイヤーを描く（★ main.js の draw から呼ばれる）
+// プレイヤーを描く（鳥の画像で描いている場合）
 function drawPlayer() {
-  // 画像から1コマを切り出して描く（今は「走る」の段だけ）
-  const sx = player.frameIndex * FRAME_SIZE;   // 切り出す左上の x：何コマ目か
-  const sy = ANIMS[player.state].row * FRAME_SIZE;                  // 切り出す左上の y：2段目（走る）
-  
-  ctx.save();                                                       // 道具の今の状態を覚えておく
-  ctx.translate(player.x + player.w / 2, player.y + player.h / 2);  // 原点をキャラの中心へ移す
-  ctx.scale(player.facing, 1);                                      // 左向き（-1）なら、左右を反対にする
+  if (player.hitTimer > 0) {
+    ctx.globalAlpha = 0.4;   // 当たらない時間は、半透明で描く
+  }
+  const sx = player.frameIndex * FRAME_SIZE;
+  const sy = ANIMS[player.state].row * FRAME_SIZE;
+
+  ctx.save();
+  ctx.translate(player.x + player.w / 2, player.y + player.h / 2);
+  ctx.scale(player.facing, 1);
   ctx.drawImage(playerImg, sx, sy, FRAME_SIZE, FRAME_SIZE, -player.w / 2, -player.h / 2, player.w, player.h);
   ctx.restore();
-  
+  ctx.globalAlpha = 1;       // 半透明を元に戻す
+
   ctx.fillStyle = "#e8eeff";
   ctx.font = "14px monospace";
-  ctx.fillText("vy = " + player.vy.toFixed(0) + "   jumpsLeft = " + player.jumpsLeft + "   state = " + player.state + "   frameIndex = " + player.frameIndex, 10, 20);
+  ctx.fillText("vy = " + player.vy.toFixed(0) + "   jumpsLeft = " + player.jumpsLeft + "   state = " + player.state + "   frameIndex = " + player.frameIndex + "   hp = " + player.hp, 10, 20);
 }
