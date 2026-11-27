@@ -77,7 +77,7 @@ function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawStage();
   if (gameState === "title") {
-    drawMessage("VANISH STEP", "Enterかクリックで始める");
+    drawMessage("スーパースクエアブラザーズ", "Enterかクリックで始める");
     drawAim();
     return;                 // タイトルでは、敵とプレイヤーは描かない
   }
